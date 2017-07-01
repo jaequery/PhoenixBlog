@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Simple Blog!</title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbars" aria-controls="navbars" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="/">Home</a>
+
+      <div class="collapse navbar-collapse" id="navbars">
+        <ul class="nav nav-pills pull-right">
+          <%= if Guardian.Plug.current_resource(@conn) do %>
+          <li class="nav-item"><%= link "Users", to: "/admin", class: "btn btn-default"  %></li>
+          <li class="nav-item"><%= link "Blog", to: "/admin/blogs", class: "btn btn-default"  %></li>
+          <% end %>
+        </ul>
+      </div>
+
+      <ul class="nav navbar-nav pull-xs-right">
+        <%= if Guardian.Plug.current_resource(@conn) do %>
+        <li class="nav-item"><%= link "Account", to: account_path(@conn, :edit), class: "btn btn-default"  %></li>
+        <li class="nav-item"><%= link "Logout", to: session_path(@conn, :delete), class: "btn btn-danger"  %></li>
+        <%= else %>
+        <li class="nav-item"><%= link "Sign In", to: session_path(@conn, :new), class: "btn btn-default"  %></li>
+        <li class="nav-item"><%= link "Sign Up", to: registration_path(@conn, :new), class: "btn btn-secondary"  %></li>
+        <% end %>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <%= if get_flash(@conn, :info) do  %>
+      <div class="alert alert-info" role="alert">
+        <%= get_flash(@conn, :info) %>
+      </div>
+      <%= end %>
+      <%= if get_flash(@conn, :error) do  %>
+      <div class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></div>
+      <%= end %>
+      <div><%= render @view_module, @view_template, assigns %> </div>
+
+    </div> <!-- /container -->
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+  </body>
+</html>

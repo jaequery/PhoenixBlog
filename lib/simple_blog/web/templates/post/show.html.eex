@@ -1,0 +1,22 @@
+<ul>
+
+  <li>
+    <h1><%= @post.title %></h1>
+  </li>
+
+  <li>
+    <h2><%= @post.subject %></h2>
+  </li>
+
+  <li>
+    <%= raw(@post.content) %>
+  </li>
+
+  <li>
+    <strong>Author:</strong>
+    <em><%= @post.user.name %></em>
+    <p><span class="glyphicon glyphicon-time"></span> Posted on <%= date_format @post.inserted_at %></p>
+  </li>
+
+</ul>
+<span><%= link "Back", to: post_path(@conn, :index) %></span>
